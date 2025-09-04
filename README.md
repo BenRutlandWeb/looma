@@ -16,7 +16,7 @@ You can generate listener classes with the [make:listener](#makelistener) comman
 
 Listeners are registered in `app/Events/events.php`.
 
-### CLI
+## CLI
 
 Looma hooks into the WP CLI to register commands to make development faster.
 
