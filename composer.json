@@ -1,5 +1,5 @@
 {
-    "name": "brw/fse-micro-framework",
+    "name": "brw/looma",
     "autoload": {
         "psr-4": {
             "Looma\\": "src/"
@@ -10,5 +10,7 @@
             "name": "Ben Rutland"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.4"
+    }
 }
