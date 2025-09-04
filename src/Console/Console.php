@@ -2,6 +2,8 @@
 
 namespace Looma\Console;
 
+use WP_CLI;
+
 class Console
 {
     public function active(): bool
