@@ -20,6 +20,9 @@ final class MakeBlock implements CommandInterface
         //
     }
 
+    /**
+     * Make a block directory with a block.json, style.css and template.php file.
+     */
     public function __invoke(): void
     {
         $name = $this->ask('What is the name of block?');

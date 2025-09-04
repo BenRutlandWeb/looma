@@ -15,11 +15,14 @@ final class ClearCompiled implements CommandInterface
 
     public string $name = 'clear-compiled';
 
-    public function __construct(public Application $app)
+    public function __construct(public readonly Application $app)
     {
         //
     }
 
+    /**
+     * Clear the compiled bootstrap manifest.
+     */
     public function __invoke(): void
     {
         $this->app->get(ServiceRepository::class)->delete();

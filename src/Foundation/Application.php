@@ -4,9 +4,9 @@ namespace Looma\Foundation;
 
 use Closure;
 use Exception;
+use Looma\Console\Console;
 use Looma\Events\Dispatcher;
 use Throwable;
-use WP_CLI;
 
 final class Application
 {
@@ -35,15 +35,16 @@ final class Application
 
     public function inConsole(): string
     {
-        return class_exists(WP_CLI::class);
+        return $this->get(Console::class)->active();
     }
 
     public function commands(array $commands): void
     {
         if ($this->inConsole()) {
+            $console = $this->get(Console::class);
+
             foreach ($commands as $class) {
-                $command = new $class($this);
-                WP_CLI::add_command($command->name, $command);
+                $console->register(new $class($this));
             }
         }
     }

@@ -19,6 +19,9 @@ final class MakeListener implements CommandInterface
         //
     }
 
+    /**
+     * Make a listener class.
+     */
     public function __invoke(): void
     {
         $class = $this->ask('What is the name of class?');

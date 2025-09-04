@@ -20,6 +20,9 @@ final class MakeCommand implements CommandInterface
         //
     }
 
+    /**
+     * Make a command class.
+     */
     public function __invoke(): void
     {
         $command = $this->ask('What is the command?');

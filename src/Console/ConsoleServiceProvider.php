@@ -8,7 +8,10 @@ use Looma\Foundation\ServiceRepository;
 
 final class ConsoleServiceProvider implements ServiceProviderInterface
 {
-    public function register(Application $app): void {}
+    public function register(Application $app): void
+    {
+        $app->singleton(Console::class, fn() => new Console());
+    }
 
     public function boot(Application $app): void
     {

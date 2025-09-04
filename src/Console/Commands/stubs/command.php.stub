@@ -19,6 +19,9 @@ final class {{ class }} implements CommandInterface
         //
     }
 
+    /**
+     * {{ command }} description.
+     */
     public function __invoke(): void
     {
         $this->success("{{ command }}");
