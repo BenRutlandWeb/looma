@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/AdvancedCustomFields/schemas/refs/heads/main/json/block.json",
+    "apiVersion": 3,
+    "name": "acf/{{ slug }}",
+    "title": "{{ name }}",
+    "description": "Block description",
+    "category": "10-degrees",
+    "icon": "editor-insertmore",
+    "keywords": ["example"],
+    "acf": {
+        "renderTemplate": "./template.php"
+    },
+    "style": ["file:./style.css"],
+    "styles": [],
+    "supports": {
+        "spacing": {
+            "margin": true,
+            "padding": true
+        },
+        "anchor": true,
+        "html": false,
+        "align": ["wide", "full"],
+        "color": {
+            "background": true,
+            "text": true
+        }
+    },
+    "attributes": {
+        "align": {
+            "type": "string",
+            "default": "wide"
+        }
+    },
+    "example": {
+        "attributes": {
+            "data": {}
+        }
+    }
+}

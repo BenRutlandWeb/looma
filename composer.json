@@ -1,0 +1,14 @@
+{
+    "name": "brw/fse-micro-framework",
+    "autoload": {
+        "psr-4": {
+            "Looma\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ben Rutland"
+        }
+    ],
+    "require": {}
+}

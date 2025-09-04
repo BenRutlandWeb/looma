@@ -1,0 +1,21 @@
+<?php
+
+namespace Looma\Console;
+
+use Looma\Foundation\Application;
+use Looma\Foundation\ServiceProviderInterface;
+use Looma\Foundation\ServiceRepository;
+
+final class ConsoleServiceProvider implements ServiceProviderInterface
+{
+    public function register(Application $app): void {}
+
+    public function boot(Application $app): void
+    {
+        $commands = $app->get(ServiceRepository::class)->get('commands');
+
+        $app->commands(array_merge($commands, [
+            \Looma\Console\Commands\MakeCommand::class,
+        ]));
+    }
+}

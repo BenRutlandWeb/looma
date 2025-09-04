@@ -1,0 +1,20 @@
+<?php
+
+namespace {{ namespace }};
+
+use Looma\Events\Priority;
+use Looma\Foundation\Application;
+
+final class {{ class }}
+{
+    public function __construct(public Application $app)
+    {
+        //
+    }
+
+    #[Priority(10)]
+    public function __invoke(): void
+    {
+        //
+    }
+}
