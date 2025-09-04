@@ -1,5 +1,5 @@
 {
-    "$schema": "https://raw.githubusercontent.com/AdvancedCustomFields/schemas/refs/heads/main/json/block.json",
+    "$schema": "https://advancedcustomfields.com/schemas/json/main/block.json",
     "apiVersion": 3,
     "name": "acf/{{ slug }}",
     "title": "{{ name }}",
