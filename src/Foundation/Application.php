@@ -93,7 +93,13 @@ final class Application
 
     public function boot(): void
     {
+        $dispatcher = $this->get(Dispatcher::class);
+
+        $dispatcher->dispatch('looma:booting');
+
         $this->bootProviders();
+
+        $dispatcher->dispatch('looma:booted');
     }
 
     public function singleton(string $id, Closure $binding): void
@@ -126,6 +132,11 @@ final class Application
         }
     }
 
+    /**
+     * @template TAbstract
+     * @param class-string<TAbstract>|string $id
+     * @return ($id is class-string<TAbstract> ? TAbstract : mixed)
+     */
     public function get(string $id): mixed
     {
         try {
@@ -144,6 +155,11 @@ final class Application
         return isset($this->bindings[$id]) || isset($this->instances[$id]);
     }
 
+    /**
+     * @template TAbstract
+     * @param class-string<TAbstract>|string $id
+     * @return ($id is class-string<TAbstract> ? TAbstract : mixed)
+     */
     public function resolve(string $id, mixed ...$args): mixed
     {
         if (isset($this->instances[$id])) {
