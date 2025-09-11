@@ -18,7 +18,12 @@ final class Dispatcher
     {
         [$callable, $priority, $parameterCount] = $this->resolveCallable($callable);
 
-        add_action($event, $callable, $priority, $parameterCount);
+        add_filter($event, $callable, $priority, $parameterCount);
+    }
+
+    public function dispatch(string $event, mixed ...$args): mixed
+    {
+        return apply_filters($event, ...$args ?: [null]);
     }
 
     private function resolveCallable(string $callable): array
