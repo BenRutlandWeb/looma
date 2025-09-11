@@ -15,7 +15,7 @@ final class FoundationServiceProvider implements ServiceProviderInterface
                 'App\\Commands\\' => $app->path('Commands'),
             ],
             'blocks' => [
-                $app->path('blocks'),
+                $app->basePath . '/blocks',
             ],
         ]));
     }

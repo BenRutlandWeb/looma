@@ -25,7 +25,9 @@ final class Application
 
     public function path(string $path = ''): string
     {
-        return $this->basePath . '/app/' . trim($path, '/');
+        return wp_normalize_path(
+            trim($this->basePath . '/app/' . trim($path, '/'), '/')
+        );
     }
 
     public function cache(string $key, array $paths): void
