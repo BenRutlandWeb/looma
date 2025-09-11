@@ -12,10 +12,10 @@ final class FoundationServiceProvider implements ServiceProviderInterface
         $app->singleton(ServiceRepository::class, fn() => new ServiceRepository($app, [
             // @todo move to the service providers
             'commands' => [
-                'App\\Commands\\' => $app->basePath . '/app/Commands',
+                'App\\Commands\\' => $app->path('Commands'),
             ],
             'blocks' => [
-                $app->basePath . '/blocks',
+                $app->path('blocks'),
             ],
         ]));
     }

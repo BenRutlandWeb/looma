@@ -23,6 +23,11 @@ final class Application
         $this->registerCoreProviders();
     }
 
+    public function path(string $path): string
+    {
+        return $this->basePath . '/app/' . trim($path, '/');
+    }
+
     public function cache(string $key, array $paths): void
     {
         $this->get(ServiceRepository::class)->cache($key, $paths);

@@ -29,7 +29,7 @@ final class MakeBlock implements CommandInterface
 
         $slug = sanitize_title($name);
 
-        $dir = $this->app->basePath . '/blocks/' . $slug;
+        $dir = $this->app->path('blocks/' . $slug);
 
         if ($this->exists($dir)) {
             $this->confirm('That block already exists. Do you want to overwrite it?');

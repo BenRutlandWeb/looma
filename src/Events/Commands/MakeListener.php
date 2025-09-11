@@ -26,7 +26,7 @@ final class MakeListener implements CommandInterface
     {
         $class = $this->ask('What is the name of class?');
 
-        $path = $this->app->basePath . '/app/Events/Listeners/' . $class . '.php';
+        $path = $this->app->path('Events/Listeners/' . $class . '.php');
 
         if ($this->exists($path)) {
             $this->confirm('That listener already exists. Do you want to overwrite it?');

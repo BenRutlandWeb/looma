@@ -29,7 +29,7 @@ final class MakeCommand implements CommandInterface
 
         $class = str_replace(' ', '', ucwords(str_replace([':', '-', '_'], ' ', $command)));
 
-        $path = $this->app->basePath . '/app/Commands/' . $class . '.php';
+        $path = $this->app->path('Commands/' . $class . '.php');
 
         if ($this->exists($path)) {
             $this->confirm('That command already exists. Do you want to overwrite it?');
