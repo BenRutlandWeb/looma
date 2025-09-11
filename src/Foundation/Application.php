@@ -23,7 +23,7 @@ final class Application
         $this->registerCoreProviders();
     }
 
-    public function path(string $path): string
+    public function path(string $path = ''): string
     {
         return $this->basePath . '/app/' . trim($path, '/');
     }
