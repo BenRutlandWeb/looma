@@ -71,8 +71,6 @@ final class ServiceRepository
 
     protected function scan(): array
     {
-        error_log('scan');
-
         $classes = [];
 
         foreach (($this->scanDirs ?? []) as $key => $paths) {

@@ -4,7 +4,7 @@ Looma is a micro-framework to help with full site editor themes (and plugins).
 
 ## Advanced Custom Fields Pro
 
-Looma has built in support for ACF Pro, nameply the ability to create ACF [blocks](#makeblock) with the CLI.
+Looma has built in support for ACF Pro, namely the ability to create ACF [blocks](#makeblock) with the CLI.
 
 ## Events and listeners
 
