@@ -35,7 +35,7 @@ final class MakeCommand implements CommandInterface
             }
         } while (!$valid);
 
-        $class = str_replace(' ', '', ucwords(str_replace('-', ' ', $command)));
+        $class = str_replace(' ', '', ucwords(str_replace([':', '-'], ' ', $command)));
 
         $path = $this->app->path('app/Commands/' . $class . '.php');
 
