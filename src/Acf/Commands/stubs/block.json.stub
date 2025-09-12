@@ -4,9 +4,9 @@
     "name": "acf/{{ slug }}",
     "title": "{{ name }}",
     "description": "Block description",
-    "category": "10-degrees",
-    "icon": "editor-insertmore",
-    "keywords": ["example"],
+    "category": "looma",
+    "icon": "block-default",
+    "keywords": ["looma"],
     "acf": {
         "renderTemplate": "./template.php"
     },

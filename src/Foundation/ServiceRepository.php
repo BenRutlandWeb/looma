@@ -2,60 +2,81 @@
 
 namespace Looma\Foundation;
 
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 final class ServiceRepository
 {
     private readonly string $path;
 
-    public function __construct(private Application $app, private array $scanDirs)
+    private array $data = [];
+
+    public function __construct(private Application $app, private array $scanDirs = [])
     {
         $this->path = $app->basePath . '/bootstrap/manifest.php';
-    }
 
-    public function all(): array
-    {
-        if (!file_exists($this->path)) {
+        if ($this->exists()) {
+            $this->data = require $this->path;
+        } else {
             wp_mkdir_p(dirname($this->path));
-            $this->write($this->scan());
         }
-
-        return file_exists($this->path) ? require $this->path : [];
     }
 
+    public function exists(): bool
+    {
+        return file_exists($this->path);
+    }
+
+    public function cache(string $key, array $paths, bool $recursive = true): void
+    {
+        $paths = array_map(fn($d) => [wp_normalize_path($d), $recursive], $paths);
+
+        $this->scanDirs[$key] = array_merge_recursive($this->scanDirs[$key] ?? [], $paths);
+    }
 
     public function get(string $key): array
     {
         $return = [];
 
-        foreach (($this->all()[$key] ?? []) as $class) {
-            if (class_exists($class) || file_exists($class)) {
+        foreach (($this->data[$key] ?? []) as $path) {
+            $class = str_replace([$this->app->path('app'), '.php', '/'], ['App', '', '\\'], $path);
+
+            if (class_exists($class)) {
                 $return[] = $class;
+                continue;
             }
 
-            if (!class_exists($class) && !file_exists($class)) {
-                $this->remove($key, $class);
+            if (file_exists($path)) {
+                $return[] = $path;
+                continue;
             }
+
+            $this->remove($key, $path);
         }
 
         return $return;
     }
 
-    public function set(string $key, string $class): void
+    public function set(string $key, string $path): void
     {
-        $manifest = $this->all();
+        $manifest = $this->data;
 
-        if (!in_array($class, $manifest[$key] ?? [], true)) {
-            $manifest[$key][] = $class;
+        if (!in_array($path, $manifest[$key] ?? [])) {
+            $manifest[$key][] = wp_normalize_path($path);
+
+            sort($manifest[$key]);
 
             $this->write($manifest);
         }
     }
 
-    public function remove(string $key, string $class): void
+    public function remove(string $key, string $path): void
     {
-        $manifest = $this->all() ?? [];
+        $manifest = $this->data;
 
         $manifest[$key] = array_values(
-            array_filter($manifest[$key], fn($c) => $c !== $class)
+            array_filter($manifest[$key], fn($p) => $p !== $path)
         );
 
         $this->write($manifest);
@@ -63,39 +84,42 @@ final class ServiceRepository
 
     private function write(array $data): void
     {
+        $this->data = $data;
+
         file_put_contents(
             $this->path,
             "<?php\nreturn " . var_export($data, true) . ";\n"
         );
     }
 
-    protected function scan(): array
+    public function scan(): array
     {
-        $classes = [];
+        $files = [];
 
-        foreach (($this->scanDirs ?? []) as $key => $paths) {
-            foreach ($paths as $namespace => $scanDir) {
-                foreach (glob($scanDir . '/*.php') as $file) {
-                    $className = $namespace . basename($file, '.php');
-
-                    if (class_exists($className)) {
-                        $classes[$key][] = $className;
-                    } else {
-                        $classes[$key][] = wp_normalize_path($file);
-                    }
+        foreach ($this->scanDirs as $key => $paths) {
+            foreach ($paths as [$path, $recursive]) {
+                if (!is_dir($path)) {
+                    continue;
                 }
 
-                foreach (glob($scanDir . '/**') as $file) {
-                    if (is_dir($file)) {
-                        $classes[$key][] = wp_normalize_path($file);
-                    }
+                $rii = $recursive
+                    ? new RecursiveIteratorIterator(
+                        new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)
+                    )
+                    : new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS);
+
+                foreach ($rii as $file) {
+                    $files[$key][] = wp_normalize_path($file->getPathname());
+                    continue;
                 }
             }
         }
 
-        ksort($classes);
+        ksort($files);
 
-        return $classes;
+        $this->write($files);
+
+        return $files;
     }
 
     public function delete(): bool

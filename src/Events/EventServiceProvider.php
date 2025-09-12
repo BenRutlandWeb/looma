@@ -18,8 +18,8 @@ final class EventServiceProvider implements ServiceProviderInterface
             \Looma\Events\Commands\MakeListener::class,
         ]);
 
-        $events = (file_exists($app->path('Events/events.php')))
-            ? include $app->path('Events/events.php')
+        $events = (file_exists($app->path('app/Events/events.php')))
+            ? include $app->path('app/Events/events.php')
             : [];
 
         $app->events($events);

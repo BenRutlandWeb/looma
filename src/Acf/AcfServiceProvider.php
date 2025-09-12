@@ -11,6 +11,10 @@ final class AcfServiceProvider implements ServiceProviderInterface
 
     public function boot(Application $app): void
     {
+        $app->cache('blocks', [
+            $app->path('blocks'),
+        ], false);
+
         $app->commands([
             \Looma\Acf\Commands\MakeBlock::class,
         ]);

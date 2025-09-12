@@ -15,6 +15,10 @@ final class ConsoleServiceProvider implements ServiceProviderInterface
 
     public function boot(Application $app): void
     {
+        $app->cache('commands', [
+            $app->path('app/Commands'),
+        ]);
+
         $commands = $app->get(ServiceRepository::class)->get('commands');
 
         $app->commands(array_merge($commands, [

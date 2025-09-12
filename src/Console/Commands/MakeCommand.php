@@ -25,11 +25,19 @@ final class MakeCommand implements CommandInterface
      */
     public function __invoke(): void
     {
-        $command = $this->ask('What is the command?');
+        do {
+            $command = $this->ask('What is the command?');
 
-        $class = str_replace(' ', '', ucwords(str_replace([':', '-', '_'], ' ', $command)));
+            $valid = $this->validate($command);
 
-        $path = $this->app->path('Commands/' . $class . '.php');
+            if (! $valid) {
+                $this->error('Invalid format. Use lowercase alphanumeric characters, colons and hyphens only.', false);
+            }
+        } while (!$valid);
+
+        $class = str_replace(' ', '', ucwords(str_replace('-', ' ', $command)));
+
+        $path = $this->app->path('app/Commands/' . $class . '.php');
 
         if ($this->exists($path)) {
             $this->confirm('That command already exists. Do you want to overwrite it?');
@@ -45,16 +53,21 @@ final class MakeCommand implements CommandInterface
             $contents = $this->getContents($stub);
 
             $contents = $this->replace($contents, [
-                '{{ namespace }}' => $namespace = $this->resolveNamespace('App\\Commands', $class),
-                '{{ class }}'     => $resolvedClass = $this->resolveClass($class),
-                '{{ command }}'   => $command,
+                '{{ namespace }}' => $this->resolveNamespace('App\\Commands', $class),
+                '{{ class }}'     => $this->resolveClass($class),
+                '{{ command }}'   => basename($command),
             ]);
 
             $this->putContents($path, $contents);
         }
 
-        $this->app->get(ServiceRepository::class)->set('commands', $namespace . '\\' . $resolvedClass);
+        $this->app->get(ServiceRepository::class)->set('commands', $path);
 
         $this->success("Commands '$class' created.");
+    }
+
+    public function validate(string $command): bool
+    {
+        return (bool) preg_match('/^[a-z0-9:-]+$/', $command);
     }
 }

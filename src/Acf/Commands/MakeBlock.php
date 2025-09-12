@@ -54,7 +54,7 @@ final class MakeBlock implements CommandInterface
             $this->putContents($path, $contents);
         }
 
-        $this->app->get(ServiceRepository::class)->set('blocks', wp_normalize_path($dir));
+        $this->app->get(ServiceRepository::class)->set('blocks', $dir);
 
         $this->success("Block '$slug' created in $dir");
     }

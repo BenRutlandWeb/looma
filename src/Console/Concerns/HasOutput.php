@@ -28,8 +28,8 @@ trait HasOutput
         WP_CLI::success($line);
     }
 
-    public function error(string $line): void
+    public function error(string $line, bool $exit = true): void
     {
-        WP_CLI::error($line);
+        WP_CLI::error($line, $exit);
     }
 }

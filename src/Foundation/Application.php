@@ -26,13 +26,8 @@ final class Application
     public function path(string $path = ''): string
     {
         return wp_normalize_path(
-            trim($this->basePath . '/app/' . trim($path, '/'), '/')
+            trim($this->basePath . '/' . trim($path, '/'), '/')
         );
-    }
-
-    public function cache(string $key, array $paths): void
-    {
-        $this->get(ServiceRepository::class)->cache($key, $paths);
     }
 
     public function environment(): string
@@ -65,6 +60,11 @@ final class Application
                 $dispatcher->listen($event, $listener);
             }
         }
+    }
+
+    public function cache(string $key, array $paths, bool $recursive = true): void
+    {
+        $this->get(ServiceRepository::class)->cache($key, $paths, $recursive);
     }
 
     public function registerCoreProviders(): void
