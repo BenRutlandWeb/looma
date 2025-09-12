@@ -25,12 +25,14 @@ final class MakeCommand implements CommandInterface
      */
     public function __invoke(): void
     {
+        $this->header('Looma', 'Make a command class.');
+
         do {
-            $command = $this->ask('What is the command?');
+            $command = $this->ask('What is the command? E.g. do:something');
 
             $valid = $this->validate($command);
 
-            if (! $valid) {
+            if (!$valid) {
                 $this->error('Invalid format. Use lowercase alphanumeric characters, colons and hyphens only.', false);
             }
         } while (!$valid);
@@ -39,9 +41,11 @@ final class MakeCommand implements CommandInterface
 
         $path = $this->app->path('app/Commands/' . $class . '.php');
 
-        if ($this->exists($path)) {
-            $this->confirm('That command already exists. Do you want to overwrite it?');
+        if ($this->exists($path) && !$this->confirm('That command already exists. Do you want to overwrite it?', false)) {
+            $this->error('Command creation cancelled.');
         }
+
+        $description = $this->ask('Describe what the command does.');
 
         $this->makeDirectory(dirname($path));
 
@@ -53,9 +57,10 @@ final class MakeCommand implements CommandInterface
             $contents = $this->getContents($stub);
 
             $contents = $this->replace($contents, [
-                '{{ namespace }}' => $this->resolveNamespace('App\\Commands', $class),
-                '{{ class }}'     => $this->resolveClass($class),
-                '{{ command }}'   => basename($command),
+                '{{ namespace }}'   => $this->resolveNamespace('App\\Commands', $class),
+                '{{ class }}'       => $this->resolveClass($class),
+                '{{ command }}'     => basename($command),
+                '{{ description }}' => $description,
             ]);
 
             $this->putContents($path, $contents);

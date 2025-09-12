@@ -20,10 +20,12 @@ final class {{ class }} implements CommandInterface
     }
 
     /**
-     * {{ command }} description.
+     * {{ description }}.
      */
     public function __invoke(): void
     {
+        $this->header('Looma', '{{ description }}');
+
         $this->success("{{ command }}");
     }
 }

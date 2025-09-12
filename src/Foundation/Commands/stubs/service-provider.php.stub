@@ -1,0 +1,19 @@
+<?php
+
+namespace {{ namespace }};
+
+use Looma\Foundation\Application;
+use Looma\Foundation\ServiceProviderInterface;
+
+final class {{ class }} implements ServiceProviderInterface
+{
+    public function register(Application $app): void
+    {
+        //
+    }
+
+    public function boot(Application $app): void
+    {
+        //
+    }
+}

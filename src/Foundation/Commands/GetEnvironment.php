@@ -6,14 +6,13 @@ use Looma\Console\CommandInterface;
 use Looma\Console\Concerns\GeneratesFiles;
 use Looma\Console\Concerns\HasOutput;
 use Looma\Foundation\Application;
-use Looma\Foundation\ServiceRepository;
 
-final class ClearCompiled implements CommandInterface
+final class GetEnvironment implements CommandInterface
 {
     use GeneratesFiles;
     use HasOutput;
 
-    public string $name = 'clear-compiled';
+    public string $name = 'get:env';
 
     public function __construct(public readonly Application $app)
     {
@@ -21,14 +20,12 @@ final class ClearCompiled implements CommandInterface
     }
 
     /**
-     * Clear the compiled bootstrap manifest.
+     * Get the current environment.
      */
     public function __invoke(): void
     {
-        $this->header('Looma', 'Clear the compiled bootstrap manifest.');
+        $this->header('Looma', 'Get the current environment.');
 
-        $this->app->get(ServiceRepository::class)->delete();
-
-        $this->success('Manifest deleted');
+        $this->info("The current environment is: {$this->app->environment()}");
     }
 }

@@ -3,7 +3,6 @@
 namespace Looma\Foundation;
 
 use Looma\Foundation\Application;
-use Looma\Foundation\Events\CompileCache;
 use Looma\Foundation\ServiceProviderInterface;
 
 final class FoundationServiceProvider implements ServiceProviderInterface
@@ -15,13 +14,21 @@ final class FoundationServiceProvider implements ServiceProviderInterface
 
     public function boot(Application $app): void
     {
+        $app->cache('service-providers', [
+            $app->path('app/ServiceProviders'),
+        ]);
+
         $app->commands([
             \Looma\Foundation\Commands\ClearCompiled::class,
+            \Looma\Foundation\Commands\GetEnvironment::class,
+            \Looma\Foundation\Commands\ListCommands::class,
+            \Looma\Foundation\Commands\MakeServiceProvider::class,
         ]);
 
         $app->events([
             'looma:booted' => [
-                CompileCache::class,
+                \Looma\Foundation\Events\CompileCache::class,
+                \Looma\Foundation\Events\RegisterServiceProviders::class,
             ],
         ]);
     }

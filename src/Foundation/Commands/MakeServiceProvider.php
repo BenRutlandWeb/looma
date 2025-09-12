@@ -1,18 +1,18 @@
 <?php
 
-namespace Looma\Events\Commands;
+namespace Looma\Foundation\Commands;
 
 use Looma\Console\CommandInterface;
 use Looma\Console\Concerns\GeneratesFiles;
 use Looma\Console\Concerns\HasOutput;
 use Looma\Foundation\Application;
 
-final class MakeListener implements CommandInterface
+final class MakeServiceProvider implements CommandInterface
 {
     use GeneratesFiles;
     use HasOutput;
 
-    public string $name = 'make:listener';
+    public string $name = 'make:service-provider';
 
     public function __construct(public Application $app)
     {
@@ -20,14 +20,14 @@ final class MakeListener implements CommandInterface
     }
 
     /**
-     * Make a listener class.
+     * Make a service provider class.
      */
     public function __invoke(): void
     {
-        $this->header('Looma', 'Make a listener class.');
+        $this->header('Make service provider', 'Make a service provider class.');
 
         do {
-            $class = $this->ask('What is the name of class? E.g. Admin\DoSomething');
+            $class = $this->ask('What is the name of class? E.g. AppServiceProvider');
 
             $valid = $this->validate($class);
 
@@ -36,30 +36,30 @@ final class MakeListener implements CommandInterface
             }
         } while (!$valid);
 
-        $path = $this->app->path('app/Events/Listeners/' . $class . '.php');
+        $path = $this->app->path('app/ServiceProviders/' . $class . '.php');
 
-        if ($this->exists($path) && !$this->confirm('That listener already exists. Do you want to overwrite it?', false)) {
-            $this->error('Listener creation cancelled.');
+        if ($this->exists($path) && !$this->confirm('That service provider already exists. Do you want to overwrite it?', false)) {
+            $this->error('Service provider creation cancelled.');
         }
 
         $this->makeDirectory(dirname($path));
 
         $stubs = [
-            __DIR__ . '/stubs/listener.php.stub' => $path,
+            __DIR__ . '/stubs/service-provider.php.stub' => $path,
         ];
 
         foreach ($stubs as $stub => $path) {
             $contents = $this->getContents($stub);
 
             $contents = $this->replace($contents, [
-                '{{ namespace }}' => $this->resolveNamespace('App\\Events\\Listeners', $class),
+                '{{ namespace }}' => $this->resolveNamespace('App\\ServiceProviders', $class),
                 '{{ class }}'     => $this->resolveClass($class),
             ]);
 
             $this->putContents($path, $contents);
         }
 
-        $this->success("Listener '$class' created.");
+        $this->success("Service provider '$class' created.");
     }
 
     public function validate(string $class): bool

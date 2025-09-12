@@ -25,14 +25,16 @@ final class MakeBlock implements CommandInterface
      */
     public function __invoke(): void
     {
-        $name = $this->ask('What is the name of block?');
+        $this->header('Looma', 'Make a block directory with a block.json, style.css and template.php file.');
+
+        $name = $this->ask('What is the name of block? E.g. App Header');
 
         $slug = sanitize_title($name);
 
         $dir = $this->app->path('blocks/' . $slug);
 
-        if ($this->exists($dir)) {
-            $this->confirm('That block already exists. Do you want to overwrite it?');
+        if ($this->exists($dir) && !$this->confirm('That block already exists. Do you want to overwrite it?', false)) {
+            $this->error('Block creation cancelled.');
         }
 
         $this->makeDirectory($dir);

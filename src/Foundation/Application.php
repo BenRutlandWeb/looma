@@ -75,16 +75,16 @@ final class Application
         $this->register(\Looma\Events\EventServiceProvider::class);
     }
 
-    public function register(string $provider): void
+    public function register(string $provider): ServiceProviderInterface
     {
         $provider = new $provider();
 
         $provider->register($this);
 
-        $this->providers[] = $provider;
+        return $this->providers[] = $provider;
     }
 
-    protected function bootProviders(): void
+    public function bootProviders(): void
     {
         foreach ($this->providers as $provider) {
             $provider->boot($this);
