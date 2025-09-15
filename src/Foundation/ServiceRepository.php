@@ -8,18 +8,16 @@ use RecursiveIteratorIterator;
 
 final class ServiceRepository
 {
-    private readonly string $path;
-
     private array $data = [];
 
-    public function __construct(private Application $app, private array $scanDirs = [])
-    {
-        $this->path = $app->basePath . '/bootstrap/manifest.php';
+    private array $scanDirs = [];
 
+    public function __construct(private Application $app, private readonly string $path)
+    {
         if ($this->exists()) {
-            $this->data = require $this->path;
+            $this->data = require $path;
         } else {
-            wp_mkdir_p(dirname($this->path));
+            wp_mkdir_p(dirname($path));
         }
     }
 

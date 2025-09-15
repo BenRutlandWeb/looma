@@ -9,7 +9,10 @@ final class FoundationServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app): void
     {
-        $app->singleton(ServiceRepository::class, fn() => new ServiceRepository($app));
+        $app->singleton(ServiceRepository::class, fn() => new ServiceRepository(
+            $app,
+            $app->path('bootstrap/manifest.php'),
+        ));
     }
 
     public function boot(Application $app): void
