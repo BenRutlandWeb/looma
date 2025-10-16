@@ -65,7 +65,7 @@ Looma hooks into the WP CLI to register commands to make development faster.
 
 ### clear-compiled
 
-Looma creates a manifest file containing classes and paths to autoload. For example, blocks are autoloaded once created via the CLI. The manifest is rebuilt automatically however cccasionally you may need to clear the manifest.
+Looma creates a manifest file containing classes and paths to autoload. For example, blocks are autoloaded once created via the CLI. The manifest is rebuilt automatically however occasionally you may need to clear the manifest.
 
 ```bash
 wp looma clear-compiled
@@ -73,7 +73,7 @@ wp looma clear-compiled
 
 ### make:block
 
-Creating blocks is made simple with this command. It creates the block.json, style.css and template.php files and autoloads them.
+Creating blocks is made simple with this command. It creates the `block.json`, `style.css` and `template.php` files and autoloads them.
 
 ```bash
 wp looma make:block
