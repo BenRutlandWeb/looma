@@ -2,6 +2,34 @@
 
 Looma is a micro-framework to help with full site editor themes (and plugins).
 
+## Contents
+
+1. [Installation](#installation)
+2. [Advanced Custom Fields pro](#advanced-custom-fields-pro)
+3. [Events and listeners](#events-and-listeners)
+4. [CLI](#cli)
+
+## Installation
+
+If using composer, use the following command:
+
+```bash
+composer require brw/looma
+```
+
+In `functions.php` or the main plugin file, require the autoloader and initialize Looma.
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+$app = new \Looma\Foundation\Application(__DIR__);
+
+$app->boot();
+
+```
+
 ## Advanced Custom Fields Pro
 
 Looma has built in support for ACF Pro, namely the ability to create ACF [blocks](#makeblock) with the CLI.
@@ -14,7 +42,22 @@ Looma's event dispatcher will automatically determine the number of parameters, 
 
 You can generate listener classes with the [make:listener](#makelistener) command.
 
-Listeners are registered in `app/Events/events.php`.
+Listeners can be registered in `app/Events/events.php` or with the `$app->events()` method:
+
+```php
+<?php
+
+$app->events([
+    'init' => [
+        \App\Events\Listeners\ListenerOne::class,
+        \App\Events\Listeners\ListenerTwo::class,
+    ],
+    'template_redirect' => [
+        \App\Events\Listeners\ListenerThree::class,
+    ],
+]);
+
+```
 
 ## CLI
 
