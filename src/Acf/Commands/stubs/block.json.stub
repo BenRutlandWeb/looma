@@ -8,7 +8,8 @@
     "icon": "block-default",
     "keywords": ["looma"],
     "acf": {
-        "renderTemplate": "./template.php"
+        "renderTemplate": "./template.php",
+        "blockVersion": 3
     },
     "style": ["file:./style.css"],
     "styles": [],
