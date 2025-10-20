@@ -12,7 +12,7 @@ final class {{ class }}
         //
     }
 
-    #[Priority(10)]
+    #[Priority(Priority::NORMAL)]
     public function __invoke(): void
     {
         //
