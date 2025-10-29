@@ -29,12 +29,23 @@ final class RegisterBlocks
             printf('<div %s>', get_block_wrapper_attributes());
         }
 
-        if (file_exists($template = $block['path'] . '/template.php')) {
+        if (file_exists($template = $this->getPath($block))) {
             include $template;
         }
 
         if (!$preview) {
             printf('</div>');
         }
+    }
+
+    public function getPath(array $block): string
+    {
+        if (isset($block['path']) && file_exists($block['path'] . '/' . $block['render_template'])) {
+            return $block['path'] . '/' . $block['render_template'];
+        } elseif (file_exists($block['render_template'])) {
+            return $block['render_template'];
+        }
+
+        return locate_template($block['render_template']);
     }
 }
