@@ -28,7 +28,7 @@ final class RegisterBlocks
         if (!$preview) {
             printf('<div %s>', get_block_wrapper_attributes([
                 // block anchor is not supported in dynamic blocks
-                'id' => $block['anchor'] ?? $block['id'],
+                'id' => isset($block['anchor']) ? $block['anchor'] : $block['id'],
             ]));
         }
 
