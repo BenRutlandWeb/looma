@@ -26,11 +26,19 @@ final class RegisterBlocks
     public function renderCallback(array $block, string $content = '', bool $preview = false, int $postId = 0)
     {
         if (!$preview) {
-            printf('<div %s>', get_block_wrapper_attributes());
+            printf('<div %s>', get_block_wrapper_attributes([
+                // block anchor is not supported in dynamic blocks
+                'id' => $block['anchor'] ?? $block['id'],
+            ]));
         }
 
         if (file_exists($template = $this->getPath($block))) {
-            include $template;
+            $block['post']   = get_post($postId);
+            $block['fields'] = get_fields();
+
+            (static function (string $__file, array $block) {
+                return include $__file;
+            })($template, $block);
         }
 
         if (!$preview) {
