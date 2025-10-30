@@ -36,6 +36,7 @@ final class RegisterBlocks
             $block['post']   = get_post($postId);
             $block['fields'] = get_fields();
 
+            // prevent variables leaking in the block template
             (static function (string $__file, array $block) {
                 return include $__file;
             })($template, $block);
