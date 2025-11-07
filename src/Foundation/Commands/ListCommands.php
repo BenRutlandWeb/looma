@@ -3,14 +3,12 @@
 namespace Looma\Foundation\Commands;
 
 use Looma\Console\CommandInterface;
-use Looma\Console\Concerns\GeneratesFiles;
 use Looma\Console\Concerns\HasOutput;
 use Looma\Foundation\Application;
 use WP_CLI;
 
 final class ListCommands implements CommandInterface
 {
-    use GeneratesFiles;
     use HasOutput;
 
     public string $name = 'list';

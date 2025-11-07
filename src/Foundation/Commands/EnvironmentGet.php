@@ -3,16 +3,14 @@
 namespace Looma\Foundation\Commands;
 
 use Looma\Console\CommandInterface;
-use Looma\Console\Concerns\GeneratesFiles;
 use Looma\Console\Concerns\HasOutput;
 use Looma\Foundation\Application;
 
-final class GetEnvironment implements CommandInterface
+final class EnvironmentGet implements CommandInterface
 {
-    use GeneratesFiles;
     use HasOutput;
 
-    public string $name = 'get:env';
+    public string $name = 'env:get';
 
     public function __construct(public readonly Application $app)
     {

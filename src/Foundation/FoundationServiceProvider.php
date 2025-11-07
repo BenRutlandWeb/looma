@@ -23,7 +23,8 @@ final class FoundationServiceProvider implements ServiceProviderInterface
 
         $app->commands([
             \Looma\Foundation\Commands\ClearCompiled::class,
-            \Looma\Foundation\Commands\GetEnvironment::class,
+            \Looma\Foundation\Commands\EnvironmentGet::class,
+            \Looma\Foundation\Commands\EnvironmentSet::class,
             \Looma\Foundation\Commands\ListCommands::class,
             \Looma\Foundation\Commands\MakeServiceProvider::class,
         ]);

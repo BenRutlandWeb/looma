@@ -9,7 +9,7 @@ use Looma\Foundation\Application;
 
 final class {{ class }} implements CommandInterface
 {
-    use GeneratesFiles;
+    // use GeneratesFiles;
     use HasOutput;
 
     public string $name = '{{ command }}';
@@ -26,6 +26,6 @@ final class {{ class }} implements CommandInterface
     {
         $this->header('Looma', '{{ description }}');
 
-        $this->success("{{ command }}");
+        $this->success('{{ command }}');
     }
 }

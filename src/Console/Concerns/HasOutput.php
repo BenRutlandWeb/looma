@@ -321,4 +321,26 @@ trait HasOutput
 
         return 80;
     }
+
+    public function call(string $command, array $arguments = [], bool $silent = false, bool $launch = true): bool
+    {
+        $return = WP_CLI::runcommand($command, [
+            'return'       => true,
+            'launch'       => $launch,
+            'exit_error'   => false,
+            'command_args' => $arguments,
+        ]);
+
+        if (!$silent) {
+            echo $return;
+            $this->newLine();
+        }
+
+        return $return ? true : false;
+    }
+
+    public function callSilently(string $command, array $arguments = []): bool
+    {
+        return $this->call($command, $arguments, true);
+    }
 }
