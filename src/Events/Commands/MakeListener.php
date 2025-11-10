@@ -59,7 +59,7 @@ final class MakeListener implements CommandInterface
             $this->putContents($path, $contents);
         }
 
-        $this->success("Listener '$class' created.");
+        $this->success("Listener '{$class}' created.");
     }
 
     public function validate(string $class): bool

@@ -58,6 +58,6 @@ final class MakeBlock implements CommandInterface
 
         $this->app->get(ServiceRepository::class)->set('blocks', $dir);
 
-        $this->success("Block '$slug' created in $dir");
+        $this->success("Block '{$slug}' created in {$dir}");
     }
 }

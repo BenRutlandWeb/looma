@@ -26,11 +26,10 @@ final class EnvironmentSet implements CommandInterface
 
         $env = $this->ask('What environment?', ['local', 'development', 'staging', 'production'], $this->app->environment());
 
-        if ($this->callSilently(sprintf('config set WP_ENVIRONMENT_TYPE %s', $env))) {
-            $this->success(sprintf('Updated the environment to %s', $env))
-                ->terminate();
+        if ($this->callSilently("config set WP_ENVIRONMENT_TYPE {$env}")) {
+            $this->success("Updated the environment to {$env}.")->terminate();
         }
 
-        $this->error('Failed to update the environment');
+        $this->error('Failed to update the environment.');
     }
 }

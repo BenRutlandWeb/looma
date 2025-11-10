@@ -59,7 +59,7 @@ final class MakeServiceProvider implements CommandInterface
             $this->putContents($path, $contents);
         }
 
-        $this->success("Service provider '$class' created.");
+        $this->success("Service provider '{$class}' created.");
     }
 
     public function validate(string $class): bool

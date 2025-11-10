@@ -27,6 +27,6 @@ final class ClearCompiled implements CommandInterface
 
         $this->app->get(ServiceRepository::class)->delete();
 
-        $this->success('Manifest deleted');
+        $this->success('Manifest deleted.');
     }
 }

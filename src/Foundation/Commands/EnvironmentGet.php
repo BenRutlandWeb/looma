@@ -24,6 +24,6 @@ final class EnvironmentGet implements CommandInterface
     {
         $this->header('Looma', 'Get the current environment.');
 
-        $this->info("The current environment is: {$this->app->environment()}");
+        $this->info("The current environment is: {$this->app->environment()}.");
     }
 }

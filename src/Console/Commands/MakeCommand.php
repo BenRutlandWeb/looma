@@ -68,7 +68,7 @@ final class MakeCommand implements CommandInterface
 
         $this->app->get(ServiceRepository::class)->set('commands', $path);
 
-        $this->success("Commands '$class' created.");
+        $this->success("Command '{$class}' created.");
     }
 
     public function validate(string $command): bool
