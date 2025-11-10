@@ -6,9 +6,12 @@ use Closure;
 use Exception;
 use Looma\Console\Console;
 use Looma\Events\Dispatcher;
+use Looma\Foundation\Concerns\ContainerException;
+use Looma\Foundation\Concerns\NotFoundException;
+use Psr\Container\ContainerInterface;
 use Throwable;
 
-final class Application
+final class Application implements ContainerInterface
 {
     private array $providers = [];
 
@@ -143,10 +146,10 @@ final class Application
             return $this->resolve($id);
         } catch (Throwable $e) {
             if ($this->has($id)) {
-                throw new Exception($id, $e->getCode(), $e);
+                throw new ContainerException($e->getMessage(), $e->getCode(), $e);
             }
 
-            throw new Exception($id, $e->getCode(), $e);
+            throw new NotFoundException("Target class [$id] does not exist.", $e->getCode(), $e);
         }
     }
 
