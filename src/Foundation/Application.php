@@ -24,6 +24,8 @@ final class Application implements ContainerInterface
     public function __construct(public readonly string $basePath)
     {
         $this->registerCoreProviders();
+
+        $this->instance(Environment::class, Environment::capture());
     }
 
     public function path(string $path = ''): string
@@ -33,9 +35,9 @@ final class Application implements ContainerInterface
         );
     }
 
-    public function environment(): string
+    public function environment(): Environment
     {
-        return wp_get_environment_type();
+        return $this->get(Environment::class);
     }
 
     public function inConsole(): string
@@ -115,6 +117,11 @@ final class Application implements ContainerInterface
         $this->bindings[$id] = [$binding, $shared];
     }
 
+    /**
+     * @template TInstance
+     * @param TInstance $instance
+     * @return TInstance
+     */
     public function instance(string $id, mixed $instance): mixed
     {
         foreach ($this->extenders[$id] ?? [] as $extender) {
