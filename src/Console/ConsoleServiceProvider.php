@@ -10,7 +10,7 @@ final class ConsoleServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app): void
     {
-        $app->singleton(Console::class, fn() => new Console());
+        $app->singleton(Console::class, fn () => new Console());
     }
 
     public function boot(Application $app): void

@@ -31,14 +31,14 @@ final class MakeServiceProvider implements CommandInterface
 
             $valid = $this->validate($class);
 
-            if (!$valid) {
+            if (! $valid) {
                 $this->error('Invalid. Not a classname.', false);
             }
-        } while (!$valid);
+        } while (! $valid);
 
         $path = $this->app->path('app/ServiceProviders/' . $class . '.php');
 
-        if ($this->exists($path) && !$this->confirm('That service provider already exists. Do you want to overwrite it?', false)) {
+        if ($this->exists($path) && ! $this->confirm('That service provider already exists. Do you want to overwrite it?', false)) {
             $this->error('Service provider creation cancelled.');
         }
 
@@ -53,7 +53,7 @@ final class MakeServiceProvider implements CommandInterface
 
             $contents = $this->replace($contents, [
                 '{{ namespace }}' => $this->resolveNamespace('App\\ServiceProviders', $class),
-                '{{ class }}'     => $this->resolveClass($class),
+                '{{ class }}' => $this->resolveClass($class),
             ]);
 
             $this->putContents($path, $contents);

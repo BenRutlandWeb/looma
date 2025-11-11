@@ -31,14 +31,14 @@ final class MakeListener implements CommandInterface
 
             $valid = $this->validate($class);
 
-            if (!$valid) {
+            if (! $valid) {
                 $this->error('Invalid. Not a classname.', false);
             }
-        } while (!$valid);
+        } while (! $valid);
 
         $path = $this->app->path('app/Events/Listeners/' . $class . '.php');
 
-        if ($this->exists($path) && !$this->confirm('That listener already exists. Do you want to overwrite it?', false)) {
+        if ($this->exists($path) && ! $this->confirm('That listener already exists. Do you want to overwrite it?', false)) {
             $this->error('Listener creation cancelled.');
         }
 
@@ -53,7 +53,7 @@ final class MakeListener implements CommandInterface
 
             $contents = $this->replace($contents, [
                 '{{ namespace }}' => $this->resolveNamespace('App\\Events\\Listeners', $class),
-                '{{ class }}'     => $this->resolveClass($class),
+                '{{ class }}' => $this->resolveClass($class),
             ]);
 
             $this->putContents($path, $contents);

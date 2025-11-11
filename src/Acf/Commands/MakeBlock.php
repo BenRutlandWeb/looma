@@ -33,15 +33,15 @@ final class MakeBlock implements CommandInterface
 
         $dir = $this->app->path('blocks/' . $slug);
 
-        if ($this->exists($dir) && !$this->confirm('That block already exists. Do you want to overwrite it?', false)) {
+        if ($this->exists($dir) && ! $this->confirm('That block already exists. Do you want to overwrite it?', false)) {
             $this->error('Block creation cancelled.');
         }
 
         $this->makeDirectory($dir);
 
         $stubs = [
-            __DIR__ . '/stubs/block.json.stub'   => $dir . '/block.json',
-            __DIR__ . '/stubs/style.css.stub'    => $dir . '/style.css',
+            __DIR__ . '/stubs/block.json.stub' => $dir . '/block.json',
+            __DIR__ . '/stubs/style.css.stub' => $dir . '/style.css',
             __DIR__ . '/stubs/template.php.stub' => $dir . '/template.php',
         ];
 

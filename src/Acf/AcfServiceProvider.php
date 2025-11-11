@@ -7,7 +7,9 @@ use Looma\Foundation\ServiceProviderInterface;
 
 final class AcfServiceProvider implements ServiceProviderInterface
 {
-    public function register(Application $app): void {}
+    public function register(Application $app): void
+    {
+    }
 
     public function boot(Application $app): void
     {
@@ -25,7 +27,7 @@ final class AcfServiceProvider implements ServiceProviderInterface
             ],
             'init' => [
                 \Looma\Acf\Events\RegisterBlocks::class,
-            ]
+            ],
         ]);
     }
 }

@@ -32,16 +32,16 @@ final class MakeCommand implements CommandInterface
 
             $valid = $this->validate($command);
 
-            if (!$valid) {
+            if (! $valid) {
                 $this->error('Invalid format. Use lowercase alphanumeric characters, colons and hyphens only.', false);
             }
-        } while (!$valid);
+        } while (! $valid);
 
         $class = str_replace(' ', '', ucwords(str_replace([':', '-'], ' ', $command)));
 
         $path = $this->app->path('app/Commands/' . $class . '.php');
 
-        if ($this->exists($path) && !$this->confirm('That command already exists. Do you want to overwrite it?', false)) {
+        if ($this->exists($path) && ! $this->confirm('That command already exists. Do you want to overwrite it?', false)) {
             $this->error('Command creation cancelled.');
         }
 
@@ -57,9 +57,9 @@ final class MakeCommand implements CommandInterface
             $contents = $this->getContents($stub);
 
             $contents = $this->replace($contents, [
-                '{{ namespace }}'   => $this->resolveNamespace('App\\Commands', $class),
-                '{{ class }}'       => $this->resolveClass($class),
-                '{{ command }}'     => basename($command),
+                '{{ namespace }}' => $this->resolveNamespace('App\\Commands', $class),
+                '{{ class }}' => $this->resolveClass($class),
+                '{{ command }}' => basename($command),
                 '{{ description }}' => $description,
             ]);
 

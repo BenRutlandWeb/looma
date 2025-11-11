@@ -16,7 +16,7 @@ final class CompileCache
     {
         $repository = $this->app->get(ServiceRepository::class);
 
-        if (!$repository->exists()) {
+        if (! $repository->exists()) {
             $repository->scan();
         }
     }

@@ -51,6 +51,7 @@ trait HasOutput
             $this->line('');
             $lines--;
         }
+
         return $this;
     }
 
@@ -58,52 +59,52 @@ trait HasOutput
     {
         $map = [
             // colors
-            'info'      => "\033[96m",
-            'error'     => "\033[91m",
-            'warning'   => "\033[33m",
-            'success'   => "\033[92m",
-            'comment'   => "\033[38;5;232m",
+            'info' => "\033[96m",
+            'error' => "\033[91m",
+            'warning' => "\033[33m",
+            'success' => "\033[92m",
+            'comment' => "\033[38;5;232m",
 
-            'red'            => "\033[38;5;196m",
-            'bg-red'         => "\033[48;5;196m",
-            'pink'           => "\033[38;5;200m",
-            'bg-pink'        => "\033[48;5;200m",
-            'purple'         => "\033[38;5;93m",
-            'bg-purple'      => "\033[48;5;93m",
-            'indigo'         => "\033[38;5;62m",
-            'bg-indigo'      => "\033[48;5;62m",
-            'blue'           => "\033[38;5;39m",
-            'bg-blue'        => "\033[48;5;39m",
-            'light-blue'     => "\033[38;5;117m",
-            'bg-light-blue'  => "\033[48;5;117m",
-            'cyan'           => "\033[38;5;51m",
-            'bg-cyan'        => "\033[48;5;51m",
-            'teal'           => "\033[38;5;37m",
-            'bg-teal'        => "\033[48;5;37m",
-            'green'          => "\033[38;5;40m",
-            'bg-green'       => "\033[48;5;40m",
-            'light-green'    => "\033[38;5;113m",
+            'red' => "\033[38;5;196m",
+            'bg-red' => "\033[48;5;196m",
+            'pink' => "\033[38;5;200m",
+            'bg-pink' => "\033[48;5;200m",
+            'purple' => "\033[38;5;93m",
+            'bg-purple' => "\033[48;5;93m",
+            'indigo' => "\033[38;5;62m",
+            'bg-indigo' => "\033[48;5;62m",
+            'blue' => "\033[38;5;39m",
+            'bg-blue' => "\033[48;5;39m",
+            'light-blue' => "\033[38;5;117m",
+            'bg-light-blue' => "\033[48;5;117m",
+            'cyan' => "\033[38;5;51m",
+            'bg-cyan' => "\033[48;5;51m",
+            'teal' => "\033[38;5;37m",
+            'bg-teal' => "\033[48;5;37m",
+            'green' => "\033[38;5;40m",
+            'bg-green' => "\033[48;5;40m",
+            'light-green' => "\033[38;5;113m",
             'bg-light-green' => "\033[48;5;113m",
-            'lime'           => "\033[38;5;154m",
-            'bg-lime'        => "\033[48;5;154m",
-            'yellow'         => "\033[38;5;226m",
-            'bg-yellow'      => "\033[48;5;226m",
-            'amber'          => "\033[38;5;214m",
-            'bg-amber'       => "\033[48;5;214m",
-            'orange'         => "\033[38;5;208m",
-            'bg-orange'      => "\033[48;5;208m",
-            'deep-orange'    => "\033[38;5;202m",
+            'lime' => "\033[38;5;154m",
+            'bg-lime' => "\033[48;5;154m",
+            'yellow' => "\033[38;5;226m",
+            'bg-yellow' => "\033[48;5;226m",
+            'amber' => "\033[38;5;214m",
+            'bg-amber' => "\033[48;5;214m",
+            'orange' => "\033[38;5;208m",
+            'bg-orange' => "\033[48;5;208m",
+            'deep-orange' => "\033[38;5;202m",
             'bg-deep-orange' => "\033[48;5;202m",
-            'brown'          => "\033[38;5;94m",
-            'bg-brown'       => "\033[48;5;94m",
-            'white'          => "\033[38;5;15m",
-            'bg-white'       => "\033[48;5;15m",
-            'light-grey'     => "\033[38;5;249m",
-            'bg-light-grey'  => "\033[48;5;249m",
-            'grey'           => "\033[38;5;232m",
-            'bg-grey'        => "\033[48;5;232m",
-            'dark-grey'      => "\033[38;5;232m\033[2m",
-            'bg-dark-grey'   => "\033[48;5;232m\033[2m",
+            'brown' => "\033[38;5;94m",
+            'bg-brown' => "\033[48;5;94m",
+            'white' => "\033[38;5;15m",
+            'bg-white' => "\033[48;5;15m",
+            'light-grey' => "\033[38;5;249m",
+            'bg-light-grey' => "\033[48;5;249m",
+            'grey' => "\033[38;5;232m",
+            'bg-grey' => "\033[48;5;232m",
+            'dark-grey' => "\033[38;5;232m\033[2m",
+            'bg-dark-grey' => "\033[48;5;232m\033[2m",
 
             // format
             'i' => "\033[3m",
@@ -114,6 +115,7 @@ trait HasOutput
         $message = preg_replace_callback('#<(.+?)>#i', function ($match) use ($map) {
             return $map[strtolower($match[1])] ?? $match[0];
         }, $message);
+
         return preg_replace('#</(.+?)>#i', "\033[0m", $message);
     }
 
@@ -141,7 +143,7 @@ trait HasOutput
 
     public function ask(string $question, array $options = [], mixed $default = null, bool $multiple = false)
     {
-        if (!empty($options)) {
+        if (! empty($options)) {
             return $this->select($question, $options, $default, $multiple);
         }
 
@@ -150,6 +152,7 @@ trait HasOutput
 
             if ($answer = trim(fgets(STDIN))) {
                 $this->newLine();
+
                 return $answer;
             }
 
@@ -172,18 +175,22 @@ trait HasOutput
             if ($input === '') {
                 if ($default) {
                     $this->replacePreviousLine($default)->newLine();
+
                     return $default;
                 }
                 $this->replacePreviousLine("<warning>Input is required.</warning>")->newLine();
+
                 continue;
             }
 
             if (isset($options[$input])) {
                 $this->replacePreviousLine($options[$input])->newLine();
+
                 return $options[$input];
             }
 
             $this->replacePreviousLine("<warning>Input {$input} is invalid.</warning>")->newLine();
+
             continue;
         }
     }
@@ -202,10 +209,12 @@ trait HasOutput
             if ($input === '') {
                 if ($defaults) {
                     $this->replacePreviousLine(implode(', ', $defaults))->newLine();
+
                     return $defaults;
                 }
 
                 $this->replacePreviousLine("<warning>Input is required.</warning>")->newLine();
+
                 continue;
             }
 
@@ -224,11 +233,13 @@ trait HasOutput
 
             if (empty($invalidSelections)) {
                 $this->replacePreviousLine(implode(', ', $validSelections))->newLine();
+
                 return $validSelections;
             }
 
             $err = implode(', ', $invalidSelections);
             $this->replacePreviousLine("<warning>Input {$err} is invalid.</warning>")->newLine();
+
             continue;
         }
     }
@@ -250,7 +261,7 @@ trait HasOutput
 
         foreach ($options as $i => $label) {
             $num = str_repeat(' ', $max - strlen((string) $i));
-            $this->line(sprintf('- [%s] %s', in_array($label, $defaults) ? "<light-blue>{$i}</light-blue>" :  $i, $num . $label));
+            $this->line(sprintf('- [%s] %s', in_array($label, $defaults) ? "<light-blue>{$i}</light-blue>" : $i, $num . $label));
         }
 
         return $this;
@@ -325,13 +336,13 @@ trait HasOutput
     public function call(string $command, array $arguments = [], bool $silent = false, bool $launch = true): bool
     {
         $return = WP_CLI::runcommand($command, [
-            'return'       => true,
-            'launch'       => $launch,
-            'exit_error'   => false,
+            'return' => true,
+            'launch' => $launch,
+            'exit_error' => false,
             'command_args' => $arguments,
         ]);
 
-        if (!$silent) {
+        if (! $silent) {
             echo $return;
             $this->newLine();
         }

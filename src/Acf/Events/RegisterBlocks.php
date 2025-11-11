@@ -25,7 +25,7 @@ final class RegisterBlocks
 
     public function renderCallback(array $block, string $content = '', bool $preview = false, int $postId = 0)
     {
-        if (!$preview) {
+        if (! $preview) {
             printf('<div %s>', get_block_wrapper_attributes([
                 // block anchor is not supported in dynamic blocks
                 'id' => isset($block['anchor']) ? $block['anchor'] : $block['id'],
@@ -33,7 +33,7 @@ final class RegisterBlocks
         }
 
         if (file_exists($template = $this->getPath($block))) {
-            $block['post']   = get_post($postId);
+            $block['post'] = get_post($postId);
             $block['fields'] = get_fields();
 
             // prevent variables leaking in the block template
@@ -42,7 +42,7 @@ final class RegisterBlocks
             })($template, $block);
         }
 
-        if (!$preview) {
+        if (! $preview) {
             printf('</div>');
         }
     }

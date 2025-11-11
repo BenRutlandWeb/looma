@@ -28,7 +28,7 @@ final class ServiceRepository
 
     public function cache(string $key, array $paths, bool $recursive = true): void
     {
-        $paths = array_map(fn($d) => [wp_normalize_path($d), $recursive], $paths);
+        $paths = array_map(fn ($d) => [wp_normalize_path($d), $recursive], $paths);
 
         $this->scanDirs[$key] = array_merge_recursive($this->scanDirs[$key] ?? [], $paths);
     }
@@ -42,11 +42,13 @@ final class ServiceRepository
 
             if (class_exists($class)) {
                 $return[] = $class;
+
                 continue;
             }
 
             if (file_exists($path)) {
                 $return[] = $path;
+
                 continue;
             }
 
@@ -60,7 +62,7 @@ final class ServiceRepository
     {
         $manifest = $this->data;
 
-        if (!in_array($path, $manifest[$key] ?? [])) {
+        if (! in_array($path, $manifest[$key] ?? [])) {
             $manifest[$key][] = wp_normalize_path($path);
 
             sort($manifest[$key]);
@@ -74,7 +76,7 @@ final class ServiceRepository
         $manifest = $this->data;
 
         $manifest[$key] = array_values(
-            array_filter($manifest[$key], fn($p) => $p !== $path)
+            array_filter($manifest[$key], fn ($p) => $p !== $path)
         );
 
         $this->write($manifest);
@@ -96,7 +98,7 @@ final class ServiceRepository
 
         foreach ($this->scanDirs as $key => $paths) {
             foreach ($paths as [$path, $recursive]) {
-                if (!is_dir($path)) {
+                if (! is_dir($path)) {
                     continue;
                 }
 
@@ -108,6 +110,7 @@ final class ServiceRepository
 
                 foreach ($rii as $file) {
                     $files[$key][] = wp_normalize_path($file->getPathname());
+
                     continue;
                 }
             }

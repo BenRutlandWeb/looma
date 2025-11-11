@@ -9,7 +9,7 @@ final class EventServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app): void
     {
-        $app->singleton(Dispatcher::class, fn() => new Dispatcher($app));
+        $app->singleton(Dispatcher::class, fn () => new Dispatcher($app));
     }
 
     public function boot(Application $app): void

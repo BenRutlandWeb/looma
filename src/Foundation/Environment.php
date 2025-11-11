@@ -4,10 +4,10 @@ namespace Looma\Foundation;
 
 enum Environment: string
 {
-    case LOCAL       = 'local';
+    case LOCAL = 'local';
     case DEVELOPMENT = 'development';
-    case STAGING     = 'staging';
-    case PRODUCTION  = 'production';
+    case STAGING = 'staging';
+    case PRODUCTION = 'production';
 
     public static function capture(): self
     {
@@ -16,7 +16,7 @@ enum Environment: string
 
     public static function toArray(): array
     {
-        return array_map(fn($env) => $env->value, self::cases());
+        return array_map(fn ($env) => $env->value, self::cases());
     }
 
     public function isLocal(): bool

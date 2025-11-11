@@ -2,14 +2,11 @@
 
 namespace Looma\Foundation;
 
-use Looma\Foundation\Application;
-use Looma\Foundation\ServiceProviderInterface;
-
 final class FoundationServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app): void
     {
-        $app->singleton(ServiceRepository::class, fn() => new ServiceRepository(
+        $app->singleton(ServiceRepository::class, fn () => new ServiceRepository(
             $app,
             $app->path('bootstrap/manifest.php'),
         ));
