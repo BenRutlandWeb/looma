@@ -31,7 +31,7 @@ final class Dispatcher
         if (function_exists($callable)) {
             $ref = new ReflectionFunction($callable);
         } elseif (class_exists($callable)) {
-            $callable = new $callable($this->app);
+            $callable = $this->app->make($callable);
             $ref = new ReflectionMethod($callable, '__invoke');
         } else {
             throw new InvalidArgumentException("Not a function or class: $callable");

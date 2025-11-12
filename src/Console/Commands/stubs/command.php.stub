@@ -5,7 +5,6 @@ namespace {{ namespace }};
 use Looma\Console\CommandInterface;
 use Looma\Console\Concerns\GeneratesFiles;
 use Looma\Console\Concerns\HasOutput;
-use Looma\Foundation\Application;
 
 final class {{ class }} implements CommandInterface
 {
@@ -13,11 +12,6 @@ final class {{ class }} implements CommandInterface
     use HasOutput;
 
     public string $name = '{{ command }}';
-
-    public function __construct(public Application $app)
-    {
-        //
-    }
 
     /**
      * {{ description }}.

@@ -4,7 +4,7 @@ namespace Looma\Foundation\Commands;
 
 use Looma\Console\CommandInterface;
 use Looma\Console\Concerns\HasOutput;
-use Looma\Foundation\Application;
+use Looma\Foundation\Environment;
 
 final class EnvironmentGet implements CommandInterface
 {
@@ -12,7 +12,7 @@ final class EnvironmentGet implements CommandInterface
 
     public string $name = 'env:get';
 
-    public function __construct(public readonly Application $app)
+    public function __construct(public readonly Environment $env)
     {
         //
     }
@@ -24,6 +24,6 @@ final class EnvironmentGet implements CommandInterface
     {
         $this->header('Looma', 'Get the current environment.');
 
-        $this->info("The current environment is: {$this->app->environment()->value}.");
+        $this->info("The current environment is: {$this->env->value}.");
     }
 }

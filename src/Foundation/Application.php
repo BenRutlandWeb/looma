@@ -9,6 +9,8 @@ use Looma\Events\Dispatcher;
 use Looma\Foundation\Concerns\ContainerException;
 use Looma\Foundation\Concerns\NotFoundException;
 use Psr\Container\ContainerInterface;
+use ReflectionClass;
+use ReflectionFunctionAbstract;
 use Throwable;
 
 final class Application implements ContainerInterface
@@ -24,6 +26,8 @@ final class Application implements ContainerInterface
     public function __construct(public readonly string $basePath)
     {
         $this->registerCoreProviders();
+
+        $this->instance(static::class, $this);
 
         $this->instance(Environment::class, Environment::capture());
     }
@@ -51,7 +55,7 @@ final class Application implements ContainerInterface
             $console = $this->get(Console::class);
 
             foreach ($commands as $class) {
-                $console->register(new $class($this));
+                $console->register($this->make($class));
             }
         }
     }
@@ -80,9 +84,14 @@ final class Application implements ContainerInterface
         $this->register(\Looma\Events\EventServiceProvider::class);
     }
 
+    /**
+     * @template TServiceProvider
+     * @param class-string<TServiceProvider> $provider
+     * @return ServiceProviderInterface
+     */
     public function register(string $provider): ServiceProviderInterface
     {
-        $provider = new $provider();
+        $provider = $this->make($provider);
 
         $provider->register($this);
 
@@ -193,5 +202,80 @@ final class Application implements ContainerInterface
         }
 
         throw new Exception($id);
+    }
+
+    /**
+     * @template TAbstract
+     * @param class-string<TAbstract> $class
+     * @return TAbstract
+     */
+    public function make(string $abstract, array $parameters = []): object
+    {
+        $reflector = new ReflectionClass($abstract);
+
+        if (! $reflector->isInstantiable()) {
+            throw new ContainerException("Target [$abstract] is not instantiable.");
+        }
+
+        if ($constructor = $reflector->getConstructor()) {
+            $arguments = $this->resolveFunctionParameters($constructor, $parameters);
+
+            return $reflector->newInstanceArgs($arguments);
+        }
+
+        return new $abstract();
+    }
+
+    public function resolveFunctionParameters(ReflectionFunctionAbstract $function, array $parameters = []): array
+    {
+        $arguments = [];
+
+        foreach ($function->getParameters() as $parameter) {
+            $name = $parameter->getName();
+
+            if (array_key_exists($name, $parameters)) {
+                $arguments[] = $parameters[$name];
+
+                continue;
+            }
+
+            $type = $parameter->getType();
+
+            if ($type && ! $type->isBuiltin()) {
+                $typeName = $type->getName();
+
+                try {
+                    $arguments[] = $this->get($typeName);
+
+                    continue;
+                } catch (Throwable) {
+                    if (class_exists($typeName)) {
+                        $arguments[] = $this->make($typeName);
+
+                        continue;
+                    }
+                }
+            }
+
+            if ($parameter->isDefaultValueAvailable()) {
+                $arguments[] = $parameter->getDefaultValue();
+
+                continue;
+            }
+
+            if ($parameter->allowsNull()) {
+                $arguments[] = null;
+
+                continue;
+            }
+
+            $declaring = $parameter->getDeclaringClass();
+
+            $parent = $declaring ? $declaring->getName() : 'function';
+
+            throw new ContainerException("Unable to resolve parameter ${$name} in [$parent].");
+        }
+
+        return $arguments;
     }
 }

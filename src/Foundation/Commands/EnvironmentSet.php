@@ -4,7 +4,6 @@ namespace Looma\Foundation\Commands;
 
 use Looma\Console\CommandInterface;
 use Looma\Console\Concerns\HasOutput;
-use Looma\Foundation\Application;
 use Looma\Foundation\Environment;
 
 final class EnvironmentSet implements CommandInterface
@@ -13,7 +12,7 @@ final class EnvironmentSet implements CommandInterface
 
     public string $name = 'env:set';
 
-    public function __construct(public readonly Application $app)
+    public function __construct(public readonly Environment $env)
     {
         //
     }
@@ -25,7 +24,7 @@ final class EnvironmentSet implements CommandInterface
     {
         $this->header('Looma', 'Set the current environment.');
 
-        $env = $this->ask('What environment?', Environment::toArray(), $this->app->environment()->value);
+        $env = $this->ask('What environment?', $this->env->toArray(), $this->env->value);
 
         if ($this->callSilently("config set WP_ENVIRONMENT_TYPE {$env}")) {
             $this->success("Updated the environment to {$env}.")->terminate();
