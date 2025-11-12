@@ -7,14 +7,14 @@ use Looma\Foundation\ServiceRepository;
 
 final class RegisterServiceProviders
 {
-    public function __construct(private Application $app)
+    public function __construct(private Application $app, private ServiceRepository $manifest)
     {
         //
     }
 
     public function __invoke(): void
     {
-        $serviceProviders = $this->app->get(ServiceRepository::class)->get('service-providers');
+        $serviceProviders = $this->manifest->get('service-providers');
 
         $providers = [];
 

@@ -2,19 +2,18 @@
 
 namespace Looma\Acf\Events;
 
-use Looma\Foundation\Application;
 use Looma\Foundation\ServiceRepository;
 
 final class RegisterBlocks
 {
-    public function __construct(private Application $app)
+    public function __construct(private ServiceRepository $manifest)
     {
         //
     }
 
     public function __invoke(): void
     {
-        $blocks = $this->app->get(ServiceRepository::class)->get('blocks');
+        $blocks = $this->manifest->get('blocks');
 
         foreach ($blocks as $block) {
             register_block_type($block, [
