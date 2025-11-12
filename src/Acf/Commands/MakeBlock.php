@@ -23,7 +23,7 @@ final class MakeBlock implements CommandInterface
     /**
      * Make a block directory with a block.json, style.css and template.php file.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', 'Make a block directory with a block.json, style.css and template.php file.');
 

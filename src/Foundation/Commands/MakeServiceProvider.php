@@ -22,7 +22,7 @@ final class MakeServiceProvider implements CommandInterface
     /**
      * Make a service provider class.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Make service provider', 'Make a service provider class.');
 

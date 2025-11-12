@@ -15,7 +15,7 @@ final class ListCommands implements CommandInterface
     /**
      * List Looma commands.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', 'List Looma commands.');
 

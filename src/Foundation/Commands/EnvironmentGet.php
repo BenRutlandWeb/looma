@@ -20,7 +20,7 @@ final class EnvironmentGet implements CommandInterface
     /**
      * Get the current environment.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', 'Get the current environment.');
 

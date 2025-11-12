@@ -16,7 +16,7 @@ final class {{ class }} implements CommandInterface
     /**
      * {{ description }}.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', '{{ description }}');
 

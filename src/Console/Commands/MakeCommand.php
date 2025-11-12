@@ -23,7 +23,7 @@ final class MakeCommand implements CommandInterface
     /**
      * Make a command class.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', 'Make a command class.');
 

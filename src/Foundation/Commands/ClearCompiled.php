@@ -20,7 +20,7 @@ final class ClearCompiled implements CommandInterface
     /**
      * Clear the compiled bootstrap manifest.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', 'Clear the compiled bootstrap manifest.');
 

@@ -22,7 +22,7 @@ final class MakeListener implements CommandInterface
     /**
      * Make a listener class.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', 'Make a listener class.');
 

@@ -20,7 +20,7 @@ final class EnvironmentSet implements CommandInterface
     /**
      * Set the current environment.
      */
-    public function __invoke(): void
+    public function __invoke(array $arguments = [], array $options = []): void
     {
         $this->header('Looma', 'Set the current environment.');
 
