@@ -3,15 +3,9 @@
 namespace {{ namespace }};
 
 use Looma\Events\Priority;
-use Looma\Foundation\Application;
 
 final class {{ class }}
 {
-    public function __construct(public Application $app)
-    {
-        //
-    }
-
     #[Priority(Priority::NORMAL)]
     public function __invoke(): void
     {
