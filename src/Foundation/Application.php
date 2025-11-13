@@ -187,7 +187,7 @@ final class Application implements ContainerInterface
             return $this->instances[$id];
         }
 
-        [$binding, $shared] = $this->bindings[$id];
+        [$binding, $shared] = $this->bindings[$id] ?? [null, null];
 
         if ($binding instanceof Closure) {
             $instance = $binding($this, ...$args);
