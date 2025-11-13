@@ -275,7 +275,7 @@ final class Application implements ContainerInterface
 
             $parent = $declaring ? $declaring->getName() : 'function';
 
-            throw new ContainerException("Unable to resolve parameter ${$name} in [$parent].");
+            throw new ContainerException("Unable to resolve parameter {$name} in [$parent].");
         }
 
         return $arguments;
