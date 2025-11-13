@@ -111,6 +111,8 @@ final class Application implements ContainerInterface
 
         $dispatcher->dispatch('looma:booting');
 
+        $this->make(RegisterManifestServiceProviders::class)->register();
+
         $this->bootProviders();
 
         $dispatcher->dispatch('looma:booted');

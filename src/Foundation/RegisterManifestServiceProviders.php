@@ -1,29 +1,23 @@
 <?php
 
-namespace Looma\Foundation\Events;
+namespace Looma\Foundation;
 
 use Looma\Foundation\Application;
 use Looma\Foundation\ServiceRepository;
 
-final class RegisterServiceProviders
+final class RegisterManifestServiceProviders
 {
     public function __construct(private Application $app, private ServiceRepository $manifest)
     {
         //
     }
 
-    public function __invoke(): void
+    public function register()
     {
         $serviceProviders = $this->manifest->get('service-providers');
 
-        $providers = [];
-
         foreach ($serviceProviders as $serviceProvider) {
-            $providers[] = $this->app->register($serviceProvider);
-        }
-
-        foreach ($providers as $provider) {
-            $provider->boot($this->app);
+            $this->app->register($serviceProvider);
         }
     }
 }

@@ -6,6 +6,7 @@ use Looma\Console\CommandInterface;
 use Looma\Console\Concerns\GeneratesFiles;
 use Looma\Console\Concerns\HasOutput;
 use Looma\Foundation\Application;
+use Looma\Foundation\ServiceRepository;
 
 final class MakeServiceProvider implements CommandInterface
 {
@@ -58,6 +59,8 @@ final class MakeServiceProvider implements CommandInterface
 
             $this->putContents($path, $contents);
         }
+
+        $this->app->get(ServiceRepository::class)->set('service-providers', $path);
 
         $this->success("Service provider '{$class}' created.");
     }

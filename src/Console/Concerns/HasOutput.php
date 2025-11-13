@@ -9,9 +9,13 @@ use function WP_CLI\Utils\make_progress_bar as wpcli_make_progress_bar;
 
 trait HasOutput
 {
-    public function success(string $message): static
+    public function success(string $message, bool $exit = false): static
     {
-        return $this->line("<success>{$message}</success>");
+        if ($exit) {
+            $this->terminate("<success>{$message}</success>");
+        }
+
+        return $this->line("<success>{$message}</success>")->newLine();
     }
 
     public function warning(string $message): static

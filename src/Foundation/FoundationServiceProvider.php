@@ -6,7 +6,7 @@ final class FoundationServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app): void
     {
-        $app->singleton(ServiceRepository::class, fn () => new ServiceRepository(
+        $app->singleton(ServiceRepository::class, fn() => new ServiceRepository(
             $app,
             $app->path('bootstrap/manifest.php'),
         ));
@@ -29,7 +29,6 @@ final class FoundationServiceProvider implements ServiceProviderInterface
         $app->events([
             'looma:booted' => [
                 \Looma\Foundation\Events\CompileCache::class,
-                \Looma\Foundation\Events\RegisterServiceProviders::class,
             ],
         ]);
     }
