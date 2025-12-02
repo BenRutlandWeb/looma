@@ -3,6 +3,7 @@
 namespace Looma\Acf\Events;
 
 use Looma\Foundation\ServiceRepository;
+use WP_Block;
 
 final class RegisterBlocks
 {
@@ -22,7 +23,7 @@ final class RegisterBlocks
         }
     }
 
-    public function renderCallback(array $block, string $content = '', bool $preview = false, int $postId = 0)
+    public function renderCallback(array $block, string $content = '', bool $preview = false, int $postId = 0, ?WP_Block $wp_block = null, array|bool $context = false)
     {
         if (! $preview) {
             printf('<div %s>', get_block_wrapper_attributes([
@@ -34,6 +35,7 @@ final class RegisterBlocks
         if (file_exists($template = $this->getPath($block))) {
             $block['post'] = get_post($postId);
             $block['fields'] = get_fields();
+            $block['context'] = $context;
 
             // prevent variables leaking in the block template
             (static function (string $__file, array $block) {
