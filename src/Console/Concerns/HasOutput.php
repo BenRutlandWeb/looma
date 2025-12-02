@@ -201,10 +201,12 @@ trait HasOutput
 
     public function selectMultiple(string $question, array $options, mixed $defaults = null)
     {
+        array_unshift($options, 'All options');
+
         while (true) {
             $this->line("<light-blue>{$question}</light-blue>")
                 ->comment('Select multiple items using commas.')
-                ->optionList(['All options', ...$options], $defaults);
+                ->optionList($options, $defaults);
 
             $input = trim(fgets(STDIN));
 
