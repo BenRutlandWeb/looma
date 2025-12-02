@@ -204,9 +204,13 @@ trait HasOutput
         while (true) {
             $this->line("<light-blue>{$question}</light-blue>")
                 ->comment('Select multiple items using commas.')
-                ->optionList($options, $defaults);
+                ->optionList(['All options', ...$options], $defaults);
 
             $input = trim(fgets(STDIN));
+
+            if ($input === '0') {
+                return $options;
+            }
 
             $defaults = $defaults ? (is_array($defaults) ? $defaults : [$defaults]) : null;
 
