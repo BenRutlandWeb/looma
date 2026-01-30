@@ -8,7 +8,7 @@ final class FoundationServiceProvider implements ServiceProviderInterface
     {
         $app->singleton(ServiceRepository::class, fn() => new ServiceRepository(
             $app,
-            $app->path('bootstrap/manifest.php'),
+            wp_get_upload_dir()['basedir'] . '/looma/cache.php',
         ));
     }
 
