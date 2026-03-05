@@ -25,6 +25,9 @@ final class AcfServiceProvider implements ServiceProviderInterface
             'acf/blocks/no_fields_assigned_message' => [
                 '__return_false',
             ],
+            'acf/blocks/wrap_frontend_innerblocks' => [
+                '__return_false',
+            ],
             'init' => [
                 \Looma\Acf\Events\RegisterBlocks::class,
             ],
