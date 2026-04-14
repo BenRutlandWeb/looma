@@ -18,6 +18,9 @@ final class KeyGenerate implements CommandInterface
      */
     public function __invoke(array $arguments = [], array $options = []): void
     {
+        // @todo key:generate sould and maybe should use aaemnnosttv/wp-cli-dotenv-command
+        // \Looma\Foundation\Commands\KeyGenerate::class,
+
         $this->header('Looma', 'Generate keys and salts for the application.');
 
         $keys = [

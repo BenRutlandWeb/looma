@@ -22,6 +22,8 @@ final class FoundationServiceProvider implements ServiceProviderInterface
             \Looma\Foundation\Commands\ClearCompiled::class,
             \Looma\Foundation\Commands\EnvironmentGet::class,
             \Looma\Foundation\Commands\EnvironmentSet::class,
+            // @todo key:generate sould and maybe should use aaemnnosttv/wp-cli-dotenv-command
+            // \Looma\Foundation\Commands\KeyGenerate::class,
             \Looma\Foundation\Commands\ListCommands::class,
             \Looma\Foundation\Commands\MakeServiceProvider::class,
         ]);
