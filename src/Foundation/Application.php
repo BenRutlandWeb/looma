@@ -82,6 +82,7 @@ final class Application implements ContainerInterface
         $this->register(\Looma\Acf\AcfServiceProvider::class);
         $this->register(\Looma\Console\ConsoleServiceProvider::class);
         $this->register(\Looma\Events\EventServiceProvider::class);
+        $this->register(\Looma\Mail\MailServiceProvider::class);
     }
 
     /**
