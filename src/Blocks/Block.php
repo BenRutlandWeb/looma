@@ -2,6 +2,7 @@
 
 namespace Looma\Blocks;
 
+use Looma\Blocks\Concerns\Align;
 use Looma\Blocks\Concerns\TemplateLock;
 use Looma\Foundation\Concerns\Arrayable;
 
@@ -53,6 +54,11 @@ final class Block implements Arrayable
     public function lock(bool $move = true, bool $remove = true): self
     {
         return $this->attribute('lock', ['move' => $move, 'remove' => $remove]);
+    }
+
+    public function align(Align $align = Align::NONE): self
+    {
+        return $this->attribute('align', $align->value);
     }
 
     public static function __callStatic(string $name, array $parameters = []): self
