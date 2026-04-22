@@ -65,6 +65,8 @@ final class Block implements Arrayable
     {
         $name = str_contains($name, '_') ? str_replace('_', '/', $name) : 'core/' . $name;
 
+        $name = strtolower(preg_replace('/[A-Z]/', '-$0', $name));
+
         return new self($name, ...$parameters);
     }
 
