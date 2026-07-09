@@ -16,9 +16,7 @@ final class MailServiceProvider implements ServiceProviderInterface
     {
         $app->events([
             'phpmailer_init' => [
-                // @todo credentials need to be passed via the container rather
-                // than the $_ENV global.
-                // \Looma\Mail\Events\RegisterSmtpCredentials::class,
+                \Looma\Mail\Events\RegisterSmtpCredentials::class,
             ],
         ]);
     }
