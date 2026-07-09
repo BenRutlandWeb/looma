@@ -12,6 +12,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "psr/container": "^2.0"
+        "psr/container": "^2.0",
+        "aaemnnosttv/wp-cli-dotenv-command": "^2.1"
     }
 }
